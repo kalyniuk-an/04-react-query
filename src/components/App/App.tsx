@@ -8,6 +8,15 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import type { Movie } from "../../types/movie";
 import MovieModal from "../MovieModal/MovieModal";
+import ReactPaginateModule from "react-paginate";
+import type { ReactPaginateProps } from "react-paginate";
+import type { ComponentType } from "react";
+
+type ModuleWithDefault<T> = { default: T };
+
+const ReactPaginate = (
+  ReactPaginateModule as unknown as ModuleWithDefault<ComponentType<ReactPaginateProps>>
+).default;
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -16,12 +25,12 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const handleSubmit = async (query: string) => {
+  const handleSubmit = async (query: string page: number) => {
     try {
       setIsLoading(true);
       setIsError(false);
       setMovies([]);
-      const data = await fetchMovie(query);
+      const data = await fetchMovie(query, page);
 
       if (data.length === 0) {
         console.log("0");
@@ -46,6 +55,7 @@ export default function App() {
     <div className={css.app}>
       {/* <SearchBar onSearch={() => { }}></SearchBar> */}
       <SearchBar onSubmit={handleSubmit}></SearchBar>
+      {!isLoading && !isError <ReactPaginate/>}
       {movies.length>0 && <MovieGrid onSelect={handleSelect} movies={movies}/>}
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
