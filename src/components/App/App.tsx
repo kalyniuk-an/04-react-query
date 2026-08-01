@@ -55,7 +55,9 @@ export default function App() {
     <div className={css.app}>
       {/* <SearchBar onSearch={() => { }}></SearchBar> */}
       <SearchBar onSubmit={handleSubmit}></SearchBar>
-      {!isLoading && !isError <ReactPaginate/>}
+      {!isLoading && !isError && totalPages>1 < ReactPaginate >
+        forsePage={page-1}
+        <ReactPaginate/}
       {movies.length>0 && <MovieGrid onSelect={handleSelect} movies={movies}/>}
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
