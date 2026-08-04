@@ -4,7 +4,7 @@ import type { Movie } from '../types/movie';
 interface movieHttpResponse {
   results: Movie[];
   page: number;
-  total_page: number;
+  total_pages: number;
   total_results: number;
 }
 const URL = 'https://api.themoviedb.org/3/search/movie';

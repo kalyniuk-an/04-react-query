@@ -1,5 +1,5 @@
 import css from "./App.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import SearchBar from "../SearchBar/SearchBar";
 import { fetchMovie } from "../../services/movieService";
@@ -36,8 +36,14 @@ export default function App() {
     placeholderData: keepPreviousData,
   });
 
-  const totalPages = data?.total_page ?? 0;
+  const totalPages = data?.total_pages ?? 0;
   const movies = data?.results ?? [];
+
+  useEffect(() => {
+    if (isSuccess && data.results.length ===0) {
+      console.log("emty")
+    }
+  },[isSuccess, data]);
 
   const handleSubmit = async (query: string ) => {
     setSelectedMovie(null);
@@ -54,7 +60,7 @@ export default function App() {
   }
   return (
     <div className={css.app}>
-      {/* <SearchBar onSearch={() => { }}></SearchBar> */}
+     
       <SearchBar onSubmit={handleSubmit}></SearchBar>
       {
         // !isSuccess && totalPages > 1 &&
