@@ -63,7 +63,7 @@ export default function App() {
      
       <SearchBar onSubmit={handleSubmit}></SearchBar>
       {
-        // !isSuccess && totalPages > 1 &&
+        isSuccess && totalPages > 1 &&
         (<ReactPaginate
         pageCount={totalPages}
         pageRangeDisplayed={5}
