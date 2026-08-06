@@ -12,6 +12,7 @@ import ReactPaginateModule from "react-paginate";
 import type { ReactPaginateProps } from "react-paginate";
 import type { ComponentType } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import toast, { Toaster } from "react-hot-toast";
 
 type ModuleWithDefault<T> = { default: T };
 
@@ -20,9 +21,7 @@ const ReactPaginate = (
 ).default;
 
 export default function App() {
-  // const [movies, setMovies] = useState<Movie[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [isError, setIsError] = useState<boolean>(false);
+  
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
@@ -41,7 +40,7 @@ export default function App() {
 
   useEffect(() => {
     if (isSuccess && data.results.length ===0) {
-      console.log("emty")
+      toast.error('No movies found for your request');
     }
   },[isSuccess, data]);
 
@@ -60,7 +59,7 @@ export default function App() {
   }
   return (
     <div className={css.app}>
-     
+      <Toaster/>
       <SearchBar onSubmit={handleSubmit}></SearchBar>
       {
         isSuccess && totalPages > 1 &&
